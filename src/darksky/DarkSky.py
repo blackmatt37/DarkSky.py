@@ -45,12 +45,12 @@ class DarkSkyResponse(object):
         """
         time_field = ""
         if self.__datehandler.currentTime() >= self.getTimeToChange():
-            return "{} for 0 minutes".format(self.currentSummary)
+            return "{} for 0 minutes".format(self.currently.summary)
         delta = (self.getTimeToChange()
                  - self.__datehandler.currentTime()
         ).seconds / 60
         return "{} for {} minutes".format(
-            self.currentSummary,
+            self.currently.summary,
             delta
         )
 
