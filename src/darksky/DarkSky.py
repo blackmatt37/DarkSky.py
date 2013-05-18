@@ -78,7 +78,7 @@ class DarkSkyResponse(object):
 
 
 class DarkSky(object):
-    darksky_url = "https://api.darkskyapp.com"
+    darksky_url = "https://api.forecast.io"
 
     def __init__(
         self,
