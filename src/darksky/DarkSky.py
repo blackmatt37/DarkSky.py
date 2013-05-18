@@ -29,7 +29,7 @@ class DarkSkyResponse(object):
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
 
     def  __setProperties(self):
-        exclusions = ['hourSummary']
+        exclusions = ['minutely.summary']
         for prop in self.__response_body.keys():
             if prop not in exclusions:
                 self.__setattr__(prop, self.__response_body[prop])
