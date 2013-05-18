@@ -91,7 +91,7 @@ class DarkSky(object):
     ):
         """
         api_key -- DarkSky api key
-        api_version -- DarkSky api version (default: 'v1')
+        api_version -- DarkSky api version (default: 'v2')
         """
         self.__api_key = api_key
         self.__api_version = api_version
@@ -123,7 +123,8 @@ class DarkSky(object):
 
         latitude -- latitude
         longitude -- longitude 
-        forecast_type -- 'forecast' or 'brief' (default: forecast)
+        forecast_type -- 'forecast'(default: forecast)
+        note: breif forecast has been removed in api v2
         
         """
         response_code, response_body = self.__http.open(
