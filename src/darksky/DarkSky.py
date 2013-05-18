@@ -124,7 +124,7 @@ class DarkSky(object):
         latitude -- latitude
         longitude -- longitude 
         forecast_type -- 'forecast'(default: forecast)
-        note: breif forecast has been removed in api v2
+        note: brief forecast has been removed in api v2
         
         """
         response_code, response_body = self.__http.open(
@@ -145,7 +145,7 @@ class DarkSky(object):
     Note: this method has been removed in api v2
     def getInteresting(self):
         Get interesting weather.
-        This method has been depreciated in api v2
+        This method has been deprecated in api v2
         Returns a list of storms.
 
         
