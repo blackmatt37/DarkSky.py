@@ -122,6 +122,9 @@ def test_getInteresting_failure():
         instance.getInteresting
     )
 """
+
+"""
+Note: getWeathers has been deprecated in api v2
 def test_getWeathers():
     mock_http = mock.Mock()
     instance = DarkSky(
@@ -186,3 +189,4 @@ def test_getWeathers():
         "https://api.darkskyapp.com/v1/precipitation/abc/12345.11,12345.12,944006400;12345.13,12345.14,817776000",
         mock_http.open.call_args[1]["url"]
     )
+"""
