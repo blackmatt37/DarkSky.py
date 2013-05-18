@@ -141,9 +141,10 @@ class DarkSky(object):
             response_body=self.__json_loads(response_body),
             forecast_type=forecast_type
         )
- 
+    """
+    Note: this method has been removed in api v2
     def getInteresting(self):
-        """Get interesting weather.
+        Get interesting weather.
         This method has been depreciated in api v2
         Returns a list of storms.
 
