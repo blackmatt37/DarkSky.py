@@ -21,8 +21,8 @@ class DarkSkyResponse(object):
         self.__instantiation_time = self.__datehandler.currentTime()
 
     def __setTimes(self):
-        if "hourPrecipitation" in dir(self):
-            for entry in self.hourPrecipitation:
+        if "minutley.data" in dir(self):
+            for entry in self.minutley.data:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
         if "dayPrecipitation" in dir(self):
             for entry in self.dayPrecipitation:
