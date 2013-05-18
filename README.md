@@ -79,7 +79,7 @@ The DarkSkyResponse object has all the response properties set as object propert
     'light rain for 13 minutes'
     >>> ds_response.isPrecipitating
     True
-    >>> cw.dayPrecipitation[0]
+    >>> cw.hourly.data[0]
     {'type': 'rain', 'temp': 74, 'probability': 0.5586104718059857, 'time': datetime.datetime(2012, 5, 28, 14, 0)}
 
 Note that dates are native Python date objects.  This also allows the special methods:
@@ -91,12 +91,12 @@ The hourSummary property is dynamic.  It will always be represented as the time 
 
 For example:
 
-    >>> cw.hourSummary
+    >>> cw.minutely.summary
     'light rain for 13 minutes'
 
 Two minutes later:
 
-    >>> cw.hourSummary
+    >>> cw.minutely.summary
     'light rain for 11 minutes'
 
 ## Running the tests
