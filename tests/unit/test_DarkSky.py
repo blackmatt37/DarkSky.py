@@ -42,7 +42,7 @@ def test_getWeather_success():
 
     yield (
         assert_equals,
-        "brief",
+        "forecast",
         mock_dsresponse.call_args[1]["forecast_type"]
     )
 
@@ -67,9 +67,11 @@ def test_getWeather_failure():
         instance.getWeather,
         123,
         1234,
-        "brief"
+        "forecast"
     )
 
+"""
+Note: Interesting was removed in api v2
 def test_getInteresting():
     mock_http = mock.Mock()
     instance = DarkSky(
@@ -119,7 +121,7 @@ def test_getInteresting_failure():
         DarkSkyException,
         instance.getInteresting
     )
-
+"""
 def test_getWeathers():
     mock_http = mock.Mock()
     instance = DarkSky(
