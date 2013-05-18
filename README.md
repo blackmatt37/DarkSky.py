@@ -38,7 +38,6 @@ current_weather = ds_interface.getWeather(
 )
 ```
 
-- getInteresting; get a list of interesting storms
 - getWeather; get weather for multiple points. With optional time elements.
 
 ```python
@@ -72,15 +71,15 @@ conditions = ds_interface.getWeathers(
 
 The DarkSkyResponse object has all the response properties set as object properties:
 
-    >>> ds_response.currentTemp
+    >>> ds_response.currently.temperature
     75
-    >>> ds_response.currentSummary
+    >>> ds_response.currently.summary
     'light rain'
-    >>> ds_response.hourSummary
+    >>> ds_response.minutely.summary
     'light rain for 13 minutes'
     >>> ds_response.isPrecipitating
     True
-    >>> cw.dayPrecipitation[0]
+    >>> cw.hourly.data[0]
     {'type': 'rain', 'temp': 74, 'probability': 0.5586104718059857, 'time': datetime.datetime(2012, 5, 28, 14, 0)}
 
 Note that dates are native Python date objects.  This also allows the special methods:
@@ -92,12 +91,12 @@ The hourSummary property is dynamic.  It will always be represented as the time 
 
 For example:
 
-    >>> cw.hourSummary
+    >>> cw.minutely.summary
     'light rain for 13 minutes'
 
 Two minutes later:
 
-    >>> cw.hourSummary
+    >>> cw.minutely.summary
     'light rain for 11 minutes'
 
 ## Running the tests
