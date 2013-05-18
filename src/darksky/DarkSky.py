@@ -160,11 +160,13 @@ class DarkSky(object):
         parsed_body = self.__json_loads(response_body)
         return parsed_body["storms"]
     """
+    """
+    Note: The options to get multiple weather locations in one api call has been removed in api v2
     def getWeathers(
         self,
         points
     ):
-        """Get weather for multiple points.
+        Get weather for multiple points.
             
         Points should be an iterable object of dicts.  The required dict fields
         are 'latitude' and 'longitude', both longs.  'time' is an optional
@@ -172,7 +174,7 @@ class DarkSky(object):
         
         points -- iterable object of coordinates and optional times
 
-        """
+        
         point_params = ""
         for point in points:
             out = "{},{}".format(point["latitude"], point["longitude"])
@@ -194,3 +196,4 @@ class DarkSky(object):
         self.__checkResponse(response_code, response_body)
         parsed_body = self.__json_loads(response_body)
         return parsed_body["precipitation"]
+    """
