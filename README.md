@@ -75,7 +75,7 @@ The DarkSkyResponse object has all the response properties set as object propert
     75
     >>> ds_response.currently.summary
     'light rain'
-    >>> ds_response.hourSummary
+    >>> ds_response.minutely.summary
     'light rain for 13 minutes'
     >>> ds_response.isPrecipitating
     True
