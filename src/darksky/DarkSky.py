@@ -83,7 +83,7 @@ class DarkSky(object):
     def __init__(
         self,
         api_key,
-        api_version="v1",
+        api_version="v2",
         http_interface = None,
         json_loads = None,
         DarkSkyResponseClass = None,
@@ -127,9 +127,8 @@ class DarkSky(object):
         
         """
         response_code, response_body = self.__http.open(
-            url = "{}/{}/{}/{}/{},{}".format(
+            url = "{}/{}/{}/{},{}".format(
                 self.darksky_url,
-                self.__api_version,
                 forecast_type,
                 self.__api_key,
                 latitude,
@@ -141,13 +140,13 @@ class DarkSky(object):
             response_body=self.__json_loads(response_body),
             forecast_type=forecast_type
         )
-
+ 
     def getInteresting(self):
         """Get interesting weather.
-
+        This method has been depreciated in api v2
         Returns a list of storms.
 
-        """
+        
         response_code, response_body = self.__http.open(
             url = "{}/{}/interesting/{}".format(
                 self.darksky_url,
@@ -158,7 +157,7 @@ class DarkSky(object):
         self.__checkResponse(response_code, response_body)
         parsed_body = self.__json_loads(response_body)
         return parsed_body["storms"]
-    
+    """
     def getWeathers(
         self,
         points
