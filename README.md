@@ -38,7 +38,6 @@ current_weather = ds_interface.getWeather(
 )
 ```
 
-- getInteresting; get a list of interesting storms
 - getWeather; get weather for multiple points. With optional time elements.
 
 ```python
@@ -72,9 +71,9 @@ conditions = ds_interface.getWeathers(
 
 The DarkSkyResponse object has all the response properties set as object properties:
 
-    >>> ds_response.currentTemp
+    >>> ds_response.currently.temperature
     75
-    >>> ds_response.currentSummary
+    >>> ds_response.currently.summary
     'light rain'
     >>> ds_response.hourSummary
     'light rain for 13 minutes'
