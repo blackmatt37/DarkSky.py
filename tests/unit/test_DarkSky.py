@@ -20,7 +20,7 @@ def test_getWeather_success():
             {"data": True}
         )
     )
-    ret_val = instance.getWeather(latitude=123, longitude=1234, forecast_type="brief")
+    ret_val = instance.getWeather(latitude=123, longitude=1234)
     
     yield (
         assert_equals,
@@ -30,7 +30,7 @@ def test_getWeather_success():
 
     yield (
         assert_equals,
-        "https://api.darkskyapp.com/v1/brief/abc/123,1234",
+        "https://api.forecast.io/forecast/abc/123,1234",
         mock_http.open.call_args[1]["url"]
     )
 
