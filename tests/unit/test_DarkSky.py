@@ -20,7 +20,7 @@ def test_getWeather_success():
             {"data": True}
         )
     )
-    ret_val = instance.getWeather(latitude=123, longitude=1234, forecast_type="brief")
+    ret_val = instance.getWeather(latitude=123, longitude=1234)
     
     yield (
         assert_equals,
@@ -30,7 +30,7 @@ def test_getWeather_success():
 
     yield (
         assert_equals,
-        "https://api.darkskyapp.com/v1/brief/abc/123,1234",
+        "https://api.forecast.io/forecast/abc/123,1234",
         mock_http.open.call_args[1]["url"]
     )
 
@@ -42,7 +42,7 @@ def test_getWeather_success():
 
     yield (
         assert_equals,
-        "brief",
+        "forecast",
         mock_dsresponse.call_args[1]["forecast_type"]
     )
 
@@ -67,9 +67,11 @@ def test_getWeather_failure():
         instance.getWeather,
         123,
         1234,
-        "brief"
+        "forecast"
     )
 
+"""
+Note: Interesting was removed in api v2
 def test_getInteresting():
     mock_http = mock.Mock()
     instance = DarkSky(
@@ -119,7 +121,10 @@ def test_getInteresting_failure():
         DarkSkyException,
         instance.getInteresting
     )
+"""
 
+"""
+Note: getWeathers has been deprecated in api v2
 def test_getWeathers():
     mock_http = mock.Mock()
     instance = DarkSky(
@@ -184,3 +189,4 @@ def test_getWeathers():
         "https://api.darkskyapp.com/v1/precipitation/abc/12345.11,12345.12,944006400;12345.13,12345.14,817776000",
         mock_http.open.call_args[1]["url"]
     )
+"""

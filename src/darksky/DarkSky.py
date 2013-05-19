@@ -21,15 +21,15 @@ class DarkSkyResponse(object):
         self.__instantiation_time = self.__datehandler.currentTime()
 
     def __setTimes(self):
-        if "hourPrecipitation" in dir(self):
-            for entry in self.hourPrecipitation:
+        if "data" in self.minutely:
+            for entry in self.minutely["data"]:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
-        if "dayPrecipitation" in dir(self):
-            for entry in self.dayPrecipitation:
+        if "data" in self.hourly:
+            for entry in self.hourly["data"]:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
 
     def  __setProperties(self):
-        exclusions = ['hourSummary']
+        exclusions = ['minutely.summary']
         for prop in self.__response_body.keys():
             if prop not in exclusions:
                 self.__setattr__(prop, self.__response_body[prop])
@@ -45,12 +45,12 @@ class DarkSkyResponse(object):
         """
         time_field = ""
         if self.__datehandler.currentTime() >= self.getTimeToChange():
-            return "{} for 0 minutes".format(self.currentSummary)
+            return "{} for 0 minutes".format(self.currently["summary"])
         delta = (self.getTimeToChange()
                  - self.__datehandler.currentTime()
         ).seconds / 60
         return "{} for {} minutes".format(
-            self.currentSummary,
+            self.currently["summary"],
             delta
         )
 
@@ -76,14 +76,15 @@ class DarkSkyResponse(object):
         )
         return self.__instantiation_time + secs_to_change
 
-
+    def isPrecipitating(self):
+        return int(self.currently["precipIntensity"]) == 0
 class DarkSky(object):
-    darksky_url = "https://api.darkskyapp.com"
+    darksky_url = "https://api.forecast.io"
 
     def __init__(
         self,
         api_key,
-        api_version="v1",
+        api_version="v2",
         http_interface = None,
         json_loads = None,
         DarkSkyResponseClass = None,
@@ -92,7 +93,7 @@ class DarkSky(object):
     ):
         """
         api_key -- DarkSky api key
-        api_version -- DarkSky api version (default: 'v1')
+        api_version -- DarkSky api version (default: 'v2')
         """
         self.__api_key = api_key
         self.__api_version = api_version
@@ -125,56 +126,50 @@ class DarkSky(object):
 
         latitude -- latitude
         longitude -- longitude 
-        forecast_type -- 'forecast' or 'brief' (default: forecast)
+        forecast_type -- 'forecast'(default: forecast)
+        note: brief forecast has been removed in api v2
         
         """
-        key = "{},{},{}".format(latitude,longitude,forecast_type)
-        try:
-            return self.__cache.get(key)
-        except KeyError:
-            response_code, response_body = self.__http.open(
-                url = "{}/{}/{}/{}/{},{}".format(
-                    self.darksky_url,
-                    self.__api_version,
-                    forecast_type,
-                    self.__api_key,
-                    latitude,
-                    longitude
-                )
+        response_code, response_body = self.__http.open(
+            url = "{}/{}/{}/{},{}".format(
+                self.darksky_url,
+                forecast_type,
+                self.__api_key,
+                latitude,
+                longitude
             )
-            self.__checkResponse(response_code, response_body)
-            resp = self.__DarkSkyResponse(
-                response_body=self.__json_loads(response_body),
-                forecast_type=forecast_type
-            )
-            self.__cache.insert(key, resp, resp.checkTimeout)
-            return resp
-
+        )
+        self.__checkResponse(response_code, response_body)
+        return self.__DarkSkyResponse(
+            response_body=self.__json_loads(response_body),
+            forecast_type=forecast_type
+        )
+    """
+    Note: this method has been removed in api v2
     def getInteresting(self):
-        """Get interesting weather.
-
+        Get interesting weather.
+        This method has been deprecated in api v2
         Returns a list of storms.
 
-        """
-        url = "{}/{}/interesting/{}".format(
-            self.darksky_url,
-            self.__api_version,
-            self.__api_key
+        
+        response_code, response_body = self.__http.open(
+            url = "{}/{}/interesting/{}".format(
+                self.darksky_url,
+                self.__api_version,
+                self.__api_key
+            )
         )
-        try:
-            return self.__cache.get(url)
-        except KeyError:
-            response_code, response_body = self.__http.open(url=url)
-            self.__checkResponse(response_code, response_body)
-            parsed_body = self.__json_loads(response_body)
-            self.__cache.insert(url, parsed_body["storms"], 600)
-            return parsed_body["storms"]
-    
+        self.__checkResponse(response_code, response_body)
+        parsed_body = self.__json_loads(response_body)
+        return parsed_body["storms"]
+    """
+    """
+    Note: The options to get multiple weather locations in one api call has been removed in api v2
     def getWeathers(
         self,
         points
     ):
-        """Get weather for multiple points.
+        Get weather for multiple points.
             
         Points should be an iterable object of dicts.  The required dict fields
         are 'latitude' and 'longitude', both longs.  'time' is an optional
@@ -182,7 +177,7 @@ class DarkSky(object):
         
         points -- iterable object of coordinates and optional times
 
-        """
+        
         point_params = ""
         for point in points:
             out = "{},{}".format(point["latitude"], point["longitude"])
@@ -199,11 +194,7 @@ class DarkSky(object):
             self.__api_key,
             point_params
         )
-        try:
-            return self.__cache.get(url)
-        except KeyError:
-            response_code, response_body = self.__http.open(url=url)
-            self.__checkResponse(response_code, response_body)
-            parsed_body = self.__json_loads(response_body)
-            self.__cache.insert(url, parsed_body["precipitation"], 600)
-            return parsed_body["precipitation"]
+        self.__checkResponse(response_code, response_body)
+        parsed_body = self.__json_loads(response_body)
+        return parsed_body["precipitation"]
+    """
