@@ -71,9 +71,9 @@ conditions = ds_interface.getWeathers(
 
 The DarkSkyResponse object has all the response properties set as object properties:
 
-    >>> ds_response.currently.temperature
+    >>> ds_response.currently["temperature"]
     75
-    >>> ds_response.currently.summary
+    >>> ds_response.currently["summary"]
     'light rain'
     >>> ds_response.minutely.summary
     'light rain for 13 minutes'
