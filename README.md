@@ -40,31 +40,6 @@ current_weather = ds_interface.getWeather(
 
 - getWeather; get weather for multiple points. With optional time elements.
 
-```python
-import datetime
-
-conditions = ds_interface.getWeathers(
-    points=[
-        {
-            "latitude":1234.0,
-            "longitude":1234.11,
-            "time":datetime.datetime(
-                year=2012,
-                month=6,
-                day=4
-            )
-        },
-        {
-            "latitude":1235.0,
-            "longitude":1235.11,
-            "time":datetime.datetime(
-                year=2012,
-                month=6,
-                day=3
-            )
-        },
-    ]
-)
 ```
 
 ### Using the DarkSkyResponse object
@@ -75,11 +50,11 @@ The DarkSkyResponse object has all the response properties set as object propert
     75
     >>> ds_response.currently["summary"]
     'light rain'
-    >>> ds_response.minutely.summary
+    >>> ds_response.minutely["summary"]
     'light rain for 13 minutes'
-    >>> ds_response.isPrecipitating
-    True
-    >>> cw.hourly.data[0]
+    NEEDS REMOVAL>>> ds_response.isPrecipitating
+    NEEDS REMOVAL True
+    >>> cw.hourly["data"][0]
     {'type': 'rain', 'temp': 74, 'probability': 0.5586104718059857, 'time': datetime.datetime(2012, 5, 28, 14, 0)}
 
 Note that dates are native Python date objects.  This also allows the special methods:
