@@ -21,8 +21,8 @@ class DarkSkyResponse(object):
         self.__instantiation_time = self.__datehandler.currentTime()
 
     def __setTimes(self):
-        if "data" in self.minutley:
-            for entry in self.minutley["data"]:
+        if "data" in self.minutely:
+            for entry in self.minutely["data"]:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
         if "data" in self.hourly:
             for entry in self.hourly["data"]:
@@ -76,7 +76,8 @@ class DarkSkyResponse(object):
         )
         return self.__instantiation_time + secs_to_change
 
-
+    def isPrecipitating(self):
+        return int(self.currently["precipIntensity"]) == 0
 class DarkSky(object):
     darksky_url = "https://api.forecast.io"
 
