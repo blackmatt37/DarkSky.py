@@ -32,7 +32,7 @@ The following methods are implemented on the interface object:
 - getWeather; for getting the weather on a particular location (returns a DarkSkyResponse object)
 
 ```python
-current_weather = ds_interface.getWeather(
+ds_response = ds_interface.getWeather(
     latitude=1234.00,
     longitude=1235.11
 )
@@ -54,9 +54,9 @@ The DarkSkyResponse object has all the response properties set as object propert
     'light rain for 13 minutes'
     >>> ds_response.isPrecipitating()
     True
-    >>> cw.hourly["data"][0]
+    >>> ds_response.hourly["data"][0]
     {'type': 'rain', 'temp': 74, 'probability': 0.5586104718059857, 'time': datetime.datetime(2012, 5, 28, 14, 0)}
-
+```
 Note that dates are native Python date objects.  This also allows the special methods:
 
 - getTimeToChange; return the time the change is predicted to occur
@@ -66,12 +66,12 @@ The hourSummary property is dynamic.  It will always be represented as the time 
 
 For example:
 
-    >>> cw.minutely.summary
+    >>> ds_response.minutely["summary"]
     'light rain for 13 minutes'
 
 Two minutes later:
 
-    >>> cw.minutely.summary
+    >>> ds_response.minutely["summary"]
     'light rain for 11 minutes'
 
 ## Running the tests
