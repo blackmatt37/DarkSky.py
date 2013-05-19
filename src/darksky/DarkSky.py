@@ -21,11 +21,11 @@ class DarkSkyResponse(object):
         self.__instantiation_time = self.__datehandler.currentTime()
 
     def __setTimes(self):
-        if "minutley.data" in dir(self):
-            for entry in self.minutley.data:
+        if "data" in self.minutley:
+            for entry in self.minutley["data"]:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
-        if "dayPrecipitation" in dir(self):
-            for entry in self.dayPrecipitation:
+        if "data" in self.hourly:
+            for entry in self.hourly["data"]:
                 entry["time"] = self.__datehandler.toDatetime(entry["time"])
 
     def  __setProperties(self):
@@ -45,12 +45,12 @@ class DarkSkyResponse(object):
         """
         time_field = ""
         if self.__datehandler.currentTime() >= self.getTimeToChange():
-            return "{} for 0 minutes".format(self.currently.summary)
+            return "{} for 0 minutes".format(self.currently["summary"])
         delta = (self.getTimeToChange()
                  - self.__datehandler.currentTime()
         ).seconds / 60
         return "{} for {} minutes".format(
-            self.currently.summary,
+            self.currently["summary"],
             delta
         )
 
